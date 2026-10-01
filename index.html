@@ -1,0 +1,386 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>تأسيس الجودة — المعايير والفورم والسكربت</title>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f8; --surface:#ffffff; --surface-2:#faf9fc; --border:#e2dee8;
+  --text:#211c2b; --dim:#625c70; --faint:#948d9f;
+  --teal:#00A4A6; --teal-ink:#006466; --teal-tint:#e2f4f4;
+  --purple:#653165; --purple-ink:#3e1d3f; --purple-tint:#f1e7f1;
+  --ok:#2f7d4f; --ok-tint:#e3f2e8; --warn:#9a5b08; --warn-tint:#fbefd9; --bad:#a83b3b; --bad-tint:#f8e3e3; --info:#2d5f8f; --info-tint:#e3edf7;
+  --shadow:0 1px 2px rgba(40,25,50,.05),0 10px 26px -16px rgba(40,25,50,.2);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#17141c; --surface:#211d28; --surface-2:#272330; --border:#393343;
+    --text:#f1eef5; --dim:#b5aec2; --faint:#857e93;
+    --teal:#3fc9cb; --teal-ink:#bdf0f0; --teal-tint:#12302f;
+    --purple:#c79bc8; --purple-ink:#efdfef; --purple-tint:#33233a;
+    --ok:#7fcf9c; --ok-tint:#173023; --warn:#e9b25c; --warn-tint:#3a2b12; --bad:#ec8f8f; --bad-tint:#3d1d1d; --info:#8fbbe6; --info-tint:#16273a;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 26px -16px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#17141c; --surface:#211d28; --surface-2:#272330; --border:#393343;
+  --text:#f1eef5; --dim:#b5aec2; --faint:#857e93;
+  --teal:#3fc9cb; --teal-ink:#bdf0f0; --teal-tint:#12302f;
+  --purple:#c79bc8; --purple-ink:#efdfef; --purple-tint:#33233a;
+  --ok:#7fcf9c; --ok-tint:#173023; --warn:#e9b25c; --warn-tint:#3a2b12; --bad:#ec8f8f; --bad-tint:#3d1d1d; --info:#8fbbe6; --info-tint:#16273a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 26px -16px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:'Tajawal','IBM Plex Sans',-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.7;font-size:15px;font-variant-numeric:tabular-nums}
+html[lang="en"] body{font-family:'IBM Plex Sans',-apple-system,'Segoe UI',sans-serif;font-size:14.5px}
+html[lang="ar"] [data-l="en"], html[lang="en"] [data-l="ar"]{display:none!important}
+h1,h2,h3{font-family:'Cairo','Tajawal',sans-serif;text-wrap:balance;margin:0}
+html[lang="en"] h1,html[lang="en"] h2,html[lang="en"] h3{font-family:'IBM Plex Sans',sans-serif}
+a{color:var(--teal-ink)}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:24px 64px}
+
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.crumb{font-size:12.5px;color:var(--dim);font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate}
+.lang-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:999px;padding:7px 14px;font:600 13px 'IBM Plex Sans',sans-serif;cursor:pointer}
+.lang-btn:hover{border-color:var(--teal)}
+.lang-btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.lang-btn svg{width:17px;height:17px}
+
+.hero{background:linear-gradient(135deg,#653165 0%,#00A4A6 100%);color:#fff;border-radius:20px;padding:30px 30px 26px;box-shadow:var(--shadow);margin-bottom:22px}
+.hero .eyebrow{display:inline-block;font:600 11.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px;margin-bottom:12px;direction:ltr;unicode-bidi:isolate}
+.hero h1{font-size:27px;font-weight:800;margin-bottom:8px}
+.hero p{margin:0;max-width:72ch;color:rgba(255,255,255,.9)}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:13px;color:rgba(255,255,255,.88)}
+.hero .meta b{color:#fff}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.kpi b{display:block;font:800 24px 'Cairo','Tajawal',sans-serif;color:var(--purple);line-height:1.2}
+html[lang="en"] .kpi b{font-family:'IBM Plex Sans',sans-serif}
+.kpi span{font-size:12.5px;color:var(--dim)}
+
+section{margin-bottom:30px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;border-bottom:1.5px solid var(--border);padding-bottom:8px}
+.sec-head .n{font:600 12px 'IBM Plex Mono',monospace;color:var(--teal-ink);background:var(--teal-tint);border-radius:7px;padding:2px 8px;direction:ltr}
+.sec-head h2{font-size:20px;color:var(--text)}
+.lead{color:var(--dim);margin:0 0 14px;max-width:82ch}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ul.pts{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px}
+ul.pts li b{color:var(--text)}
+
+.tl{display:flex;flex-direction:column;gap:0}
+.tl-item{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:0}
+.tl-date{font:700 12.5px 'IBM Plex Mono',monospace;color:var(--teal-ink);direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.tl-item h3{font-size:14.5px;margin-bottom:3px}
+.tl-item p{margin:0;font-size:13.5px;color:var(--dim)}
+.tl-item ul{margin:6px 0 0;padding-inline-start:18px;font-size:13px;color:var(--dim);display:flex;flex-direction:column;gap:3px}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+th{text-align:start;font-weight:700;color:var(--dim);font-size:12px;padding:10px 12px;border-bottom:1.5px solid var(--border);background:var(--surface-2)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.name{font-weight:700;white-space:nowrap}
+.mono{font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate;font-size:12.5px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 10px;width:fit-content}
+.p-ok{background:var(--ok-tint);color:var(--ok)}
+.p-warn{background:var(--warn-tint);color:var(--warn)}
+.p-bad{background:var(--bad-tint);color:var(--bad)}
+.p-purple{background:var(--purple-tint);color:var(--purple-ink)}
+
+.obs{display:flex;flex-direction:column;gap:10px}
+.obs-item{display:grid;grid-template-columns:28px 1fr;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.obs-item .ix{font:700 13px 'IBM Plex Mono',monospace;color:var(--teal-ink);background:var(--teal-tint);border-radius:8px;height:28px;display:flex;align-items:center;justify-content:center}
+.obs-item h3{font-size:14.5px;margin-bottom:3px}
+.obs-item p{margin:0;font-size:13.5px;color:var(--dim)}
+.fix .ix{background:var(--purple-tint);color:var(--purple-ink)}
+.fix{border-inline-start:4px solid var(--purple)}
+
+.iqs-cat{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px}
+.iqs-cat-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 18px;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.iqs-cat-head h3{font-size:15px;font-weight:800;color:var(--purple)}
+.iqs-cat-head .wt{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--teal-ink);background:var(--teal-tint);padding:3px 10px;border-radius:999px;flex:none}
+.iqs-sub{padding:10px 18px 0;font-size:11.5px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em}
+.iqs-item{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid var(--border);align-items:flex-start}
+.iqs-item:last-child{border-bottom:0}
+.iqs-item .pts{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--teal-ink);flex:none;min-width:2.4em;text-align:center}
+.iqs-item .content{flex:1;min-width:0}
+.iqs-item .name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:3px}
+.iqs-item .desc{font-size:13px;color:var(--dim);line-height:1.6}
+.iqs-item .ex{font-size:12.5px;color:var(--teal-ink);margin-top:4px}
+
+.ce-box{background:var(--bad-tint);border:1px solid var(--bad);border-radius:14px;overflow:hidden}
+.ce-item{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(168,59,59,.25);align-items:flex-start}
+.ce-item:last-child{border-bottom:0}
+.ce-item .name{font-size:13.5px;font-weight:700;color:var(--bad);margin-bottom:3px}
+.ce-item .desc{font-size:13px;color:var(--dim);line-height:1.6}
+
+.bonus-box{background:var(--ok-tint);border:1px solid var(--ok);border-radius:14px;overflow:hidden}
+.bonus-item{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(47,125,79,.2);align-items:flex-start}
+.bonus-item:last-child{border-bottom:0}
+.bonus-item .pts{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:var(--ok);flex:none;min-width:2.4em;text-align:center}
+.bonus-item .name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:3px}
+.bonus-item .desc{font-size:13px;color:var(--dim);line-height:1.6}
+
+.res-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.res{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 12px;text-decoration:none;color:var(--text);transition:border-color .15s}
+.res:hover{border-color:var(--teal)}
+.res b{font-size:13.5px}
+.res .slug{font-size:11.5px;color:var(--faint);font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate;text-align:start}
+
+footer{text-align:center;font-size:12px;color:var(--faint);padding-top:20px;border-top:1px solid var(--border);margin-top:10px}
+
+@media (max-width:860px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .tl-item{grid-template-columns:1fr}
+  .res-grid{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .hero{padding:22px 18px}
+  .hero h1{font-size:21px}
+}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <span class="crumb">QA-CSM / Quality Establishment</span>
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Switch language">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
+      <span data-l="ar">English</span><span data-l="en">العربية</span>
+    </button>
+  </div>
+
+  <header class="hero">
+    <span class="eyebrow">CSM · Rewaa · Quality Establishment</span>
+    <h1><span data-l="ar">تأسيس الجودة — المعايير والفورم والسكربت</span><span data-l="en">Quality Establishment — Criteria, Form &amp; Script</span></h1>
+    <p>
+      <span data-l="ar">تقرير مستقل يوثّق تأسيس الجودة داخل فريق نجاح العملاء: كتابة المعايير ووصفها، بناء الفورم الأول ولوحة Power BI، تحديث المعايير بإضافة قسم المحادثات وأمثلة عملية، وبناء الفورم الثاني مع العمل على سكربت معالجته.</span>
+      <span data-l="en">A standalone report documenting the establishment of Quality within the CSM team: writing the criteria and their descriptions, building the first form and the Power BI dashboard, updating the criteria with a new Chat section and practical examples, and building the second form along with the script that processes it.</span>
+    </p>
+    <div class="meta">
+      <span><span data-l="ar">الإعداد:</span><span data-l="en">Prepared by:</span> <b><span data-l="ar">فداء يوسف — قسم الجودة — فريق نجاح العملاء</span><span data-l="en">Fidaa Yousef — Quality Department — Customer Success Team</span></b></span>
+      <span><span data-l="ar">الفترة:</span><span data-l="en">Period:</span> <b><span data-l="ar">أبريل – سبتمبر 2026</span><span data-l="en">April – September 2026</span></b></span>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi"><b>4</b><span data-l="ar">أنواع تفاعل مغطّاة بالمعايير</span><span data-l="en">Interaction types covered by the criteria</span></div>
+    <div class="kpi"><b>100</b><span data-l="ar">نقطة الحد الأقصى لعلامة كل قسم</span><span data-l="en">Max points per section score</span></div>
+    <div class="kpi"><b>4</b><span data-l="ar">أخطاء حرجة تصفّر العلامة بالكامل</span><span data-l="en">Critical errors that zero the full score</span></div>
+    <div class="kpi"><b>15</b><span data-l="ar">نقطة بونص إضافية كحد أقصى</span><span data-l="en">Maximum extra bonus points</span></div>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <div class="sec-head"><span class="n">01</span><h2><span data-l="ar">الملخص التنفيذي</span><span data-l="en">Executive Summary</span></h2></div>
+    <div class="card">
+      <ul class="pts">
+        <li data-l="ar"><b>التأسيس (أبريل 2026):</b> كتابة معايير الجودة ووصفها لأنواع التفاعل الرئيسية، بناء الفورم الأول لتسجيل التقييمات، وإنشاء لوحة Power BI المرتبطة به.</li>
+        <li data-l="en"><b>Establishment (April 2026):</b> writing the quality criteria and their descriptions for the main interaction types, building the first form to record evaluations, and creating the linked Power BI dashboard.</li>
+        <li data-l="ar"><b>التحديث (أغسطس 2026):</b> إضافة قسم معايير كامل للمحادثات (Chat/Open CX)، وإضافة وصف ومثال عملي لكل معيار في جميع الأقسام، وتوضيحها للقسم بأمثلة واضحة.</li>
+        <li data-l="en"><b>Update (August 2026):</b> adding a full Chat/Open CX criteria section, adding a description and practical example to every criterion across all sections, and clarifying them to the department with clear examples.</li>
+        <li data-l="ar"><b>الفورم الثاني والسكربت (سبتمبر 2026):</b> بناء "CSM Call QA Review Form" بالكامل، والعمل على سكربت Google Apps Script الذي يعالج استجاباته ويولّد العلامات واللوحات تلقائياً.</li>
+        <li data-l="en"><b>The second form &amp; script (September 2026):</b> building the "CSM Call QA Review Form" in full, and working on the Google Apps Script that processes its responses and generates scores and dashboards automatically.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="sec-head"><span class="n">02</span><h2><span data-l="ar">التأسيس — أبريل 2026</span><span data-l="en">Establishment — April 2026</span></h2></div>
+    <div class="card">
+      <div class="tl">
+        <div class="tl-item">
+          <span class="tl-date"><span data-l="ar">أبريل 2026</span><span data-l="en">April 2026</span></span>
+          <div>
+            <h3><span data-l="ar">كتابة معايير الجودة ووصفها</span><span data-l="en">Writing the quality criteria &amp; their descriptions</span></h3>
+            <p><span data-l="ar">تحديد معايير التقييم لأنواع التفاعل الرئيسية (التفعيل، إعادة التفعيل، التعامل مع الحالات) وتوزيعها على أقسام (الافتتاح، فهم العميل، التوجيه والإجراء، الالتزام التشغيلي)، بأوزان نقطية لكل معيار يصل مجموعها إلى 100 نقطة لكل قسم.</span><span data-l="en">Defining the evaluation criteria for the main interaction types (Activation, Reactivation, Case Handling), organized into sections (Opening, Customer Understanding, Guidance &amp; Action, Operational Compliance), each criterion weighted in points totalling 100 per section.</span></p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date"><span data-l="ar">أبريل 2026</span><span data-l="en">April 2026</span></span>
+          <div>
+            <h3><span data-l="ar">بناء الفورم الأول</span><span data-l="en">Building the first form</span></h3>
+            <p><span data-l="ar">تصميم نموذج جوجل لتسجيل تقييم كل تفاعل بحسب المعايير أعلاه.</span><span data-l="en">Designing a Google Form to record each interaction's evaluation against the criteria above.</span></p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date"><span data-l="ar">أبريل 2026</span><span data-l="en">April 2026</span></span>
+          <div>
+            <h3><span data-l="ar">إنشاء لوحة Power BI</span><span data-l="en">Creating the Power BI dashboard</span></h3>
+            <p><span data-l="ar">بناء لوحة Power BI مرتبطة بنتائج الفورم الأول لعرض أداء التقييمات.</span><span data-l="en">Building a Power BI dashboard connected to the first form's results to display evaluation performance.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="sec-head"><span class="n">03</span><h2><span data-l="ar">معايير الجودة التفصيلية — الإصدار المحدّث</span><span data-l="en">Detailed Quality Criteria — Updated Version</span></h2></div>
+    <p class="lead"><span data-l="ar">المعايير الحالية بعد تحديث أغسطس 2026، بأقسامها وأوزانها وأوصافها، كما هي منشورة في صفحة المعايير التفاعلية.</span><span data-l="en">The current criteria after the August 2026 update, with their sections, weights, and descriptions, as published on the interactive criteria page.</span></p>
+
+    <div class="iqs-cat">
+      <div class="iqs-cat-head"><h3><span data-l="ar">التفعيل | Activation</span><span data-l="en">Activation</span></h3><span class="wt">100 <span data-l="ar">نقطة</span><span data-l="en">pts</span></span></div>
+      <div class="iqs-sub"><span data-l="ar">الافتتاح — 10 نقطة</span><span data-l="en">Opening — 10 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التواصل الاحترافي والتخصيص</span><span data-l="en">Professional Communication &amp; Personalization</span></div><div class="desc"><span data-l="ar">تعريف واضح بالاسم والدور، مخاطبة العميل باسمه/لقبه، التأكد من توفر وقته قبل الاستمرار، وتوضيح سبب التواصل.</span><span data-l="en">Clear self-introduction with name and role, addressing the customer by name/title, checking availability before proceeding, and clarifying the purpose of the contact.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">فهم العميل — 35 نقطة</span><span data-l="en">Customer Understanding — 35 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التحضير والإدراك بالمرحلة</span><span data-l="en">Preparation &amp; Stage Awareness</span></div><div class="desc"><span data-l="ar">مراجعة بيانات العميل وسجل التواصل السابق قبل المكالمة لتحديد مرحلته الحالية.</span><span data-l="en">Reviewing customer data and prior contact history before the call to identify the current stage.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">الإنصات الفعّال وفهم العميل</span><span data-l="en">Active Listening &amp; Customer Understanding</span></div><div class="desc"><span data-l="ar">إعطاء العميل مساحة للتحدث، طرح أسئلة توضيحية، وتجنّب المقاطعة أو الافتراضات.</span><span data-l="en">Giving the customer room to speak, asking clarifying questions, and avoiding interruptions or assumptions.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">تحديد المعوقات</span><span data-l="en">Blocker Identification</span></div><div class="desc"><span data-l="ar">تحديد واضح للعقبات الفعلية التي تمنع التفعيل (تقنية، تدريبية، أو خاصة بالعميل).</span><span data-l="en">Clearly identifying the actual obstacles preventing activation (technical, training-related, or customer-specific).</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">التوجيه والإجراء — 35 نقطة</span><span data-l="en">Guidance &amp; Action — 35 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التوجيه والحل المناسب</span><span data-l="en">Relevant Guidance &amp; Solution</span></div><div class="desc"><span data-l="ar">تقديم حلول عملية مرتبطة بالعقبة المحددة، والتأكد من فهم العميل لها.</span><span data-l="en">Offering practical solutions tied to the identified obstacle, and confirming the customer's understanding.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">دفع التفعيل</span><span data-l="en">Activation Push</span></div><div class="desc"><span data-l="ar">دفع العميل بوضوح نحو خطوة تفعيل فعلية خلال المكالمة، لا الاقتصار على تقديم المساعدة.</span><span data-l="en">Pushing the customer clearly toward a concrete activation step during the call, not merely offering help.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">أول عملية / تقدّم ملموس</span><span data-l="en">First Win / Transaction Progress</span></div><div class="desc"><span data-l="ar">ربط المكالمة بهدف أول عملية بيع، والسؤال المباشر عن حالة النشاط وموعد الانطلاق.</span><span data-l="en">Connecting the call to the first-sale objective, and directly asking about activity status and launch timeline.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">الالتزام التشغيلي — 20 نقطة</span><span data-l="en">Operational Compliance — 20 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">خطوات تالية وموعد متابعة</span><span data-l="en">Clear Next Steps &amp; Follow-up Commitment</span></div><div class="desc"><span data-l="ar">إنهاء المكالمة بخطوات متفق عليها وموعد متابعة محدد.</span><span data-l="en">Ending the call with agreed-upon next steps and a specific follow-up date.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">5</span><div class="content"><div class="name"><span data-l="ar">التنسيق الداخلي</span><span data-l="en">Internal Coordination</span></div><div class="desc"><span data-l="ar">التنسيق مع الأقسام الأخرى عند الحاجة، وإخبار العميل بالمتابعة الداخلية.</span><span data-l="en">Coordinating with other departments when needed, and informing the customer of internal follow-up.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">5</span><div class="content"><div class="name"><span data-l="ar">جودة التوثيق في CRM</span><span data-l="en">CRM Documentation Quality</span></div><div class="desc"><span data-l="ar">تسجيل الـSentiment والملاحظات، تحديث الـSubstage والتاجات، وتوثيق أي تصعيد.</span><span data-l="en">Recording sentiment and notes, updating the substage and tags, and documenting any escalation.</span></div></div></div>
+    </div>
+
+    <div class="iqs-cat">
+      <div class="iqs-cat-head"><h3><span data-l="ar">إعادة التفعيل | Reactivation</span><span data-l="en">Reactivation</span></h3><span class="wt">100 <span data-l="ar">نقطة</span><span data-l="en">pts</span></span></div>
+      <div class="iqs-sub"><span data-l="ar">الافتتاح — 10 نقطة</span><span data-l="en">Opening — 10 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التواصل الاحترافي والتخصيص</span><span data-l="en">Professional Communication &amp; Personalization</span></div><div class="desc"><span data-l="ar">تعريف واضح بالاسم والدور، مخاطبة العميل باسمه بتحية مناسبة، والسؤال عن حاله وتوفر وقته.</span><span data-l="en">Clear introduction with name/role, addressing the customer by name with an appropriate greeting, and checking on their well-being and availability.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">فهم العميل — 40 نقطة</span><span data-l="en">Customer Understanding — 40 pts</span></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">الإدراك بالمرحلة والوضع الحالي</span><span data-l="en">Stage Awareness &amp; Current Situation Understanding</span></div><div class="desc"><span data-l="ar">فهم وضع العميل الحالي (سبب التوقف، مدة عدم الاستخدام) ومرحلته قبل تقديم أي حل، ومعالجة انخفاض الاستخدام بلباقة.</span><span data-l="en">Understanding the customer's current status (why they stopped, duration of non-use) and stage before offering a solution, addressing decreased usage tactfully.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">تحديد سبب التوقف والعقبة</span><span data-l="en">Inactivity/Churn Reason &amp; Blocker Identification</span></div><div class="desc"><span data-l="ar">سؤال العميل مباشرة عن سبب توقفه عن الاستخدام، والتمييز بين مشاكل تقنية أو تشغيلية أو متعلقة بالرضا.</span><span data-l="en">Directly asking why the customer stopped using the system, distinguishing technical, operational, or satisfaction issues.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">التوجيه والإجراء — 35 نقطة</span><span data-l="en">Guidance &amp; Action — 35 pts</span></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">دفع إعادة التفعيل</span><span data-l="en">Reactivation Push</span></div><div class="desc"><span data-l="ar">تذكير العميل بالقيمة الفعلية للنظام، وتقديم مساعدة محددة (تدريب/دعم) لتسهيل عودته.</span><span data-l="en">Reminding the customer of the system's real value, and offering specific help (training, support) to facilitate their return.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">خطة/حل مناسب للعودة</span><span data-l="en">Relevant Recovery Plan / Solution</span></div><div class="desc"><span data-l="ar">اقتراح خطة تعالج سبب التوقف تحديداً، والاتفاق على خطوة فعلية للعودة للاستخدام خلال المكالمة، لا مجرد تذكير عام.</span><span data-l="en">Proposing a plan that addresses the specific churn cause, and agreeing on a concrete usage-return step during the call, not just a general reminder.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">الالتزام التشغيلي — 15 نقطة</span><span data-l="en">Operational Compliance — 15 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">خطوات تالية وموعد متابعة</span><span data-l="en">Next Steps &amp; Follow-up Commitment</span></div><div class="desc"><span data-l="ar">إنهاء المكالمة بخطوات واضحة متفق عليها وموعد متابعة فعلي، والتأكد من فهم العميل.</span><span data-l="en">Ending with clear agreed steps and an actual follow-up date, confirming the customer's understanding.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">5</span><div class="content"><div class="name"><span data-l="ar">جودة التوثيق في CRM</span><span data-l="en">CRM Documentation Quality</span></div><div class="desc"><span data-l="ar">تسجيل الـSentiment والملاحظات فوراً، تحديث الـSubstage، إضافة التاجات المناسبة، وتوثيق أي تصعيد.</span><span data-l="en">Recording sentiment and notes immediately, updating the substage, adding appropriate tags, and documenting any escalation.</span></div></div></div>
+    </div>
+
+    <div class="iqs-cat">
+      <div class="iqs-cat-head"><h3><span data-l="ar">التعامل مع الحالات | Case Handling</span><span data-l="en">Case Handling</span></h3><span class="wt">100 <span data-l="ar">نقطة</span><span data-l="en">pts</span></span></div>
+      <div class="iqs-sub"><span data-l="ar">الافتتاح — 10 نقطة</span><span data-l="en">Opening — 10 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التواصل الاحترافي والتخصيص</span><span data-l="en">Professional Communication &amp; Personalization</span></div><div class="desc"><span data-l="ar">تعريف واضح بالاسم والدور، مخاطبة العميل باسمه بتحية مناسبة، والسؤال عن حاله وتوفر وقته.</span><span data-l="en">Clear introduction with name/role, addressing by name with an appropriate greeting, checking well-being and availability.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">فهم الحالة — 20 نقطة</span><span data-l="en">Case Understanding — 20 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">التحضير وفهم الحالة</span><span data-l="en">Case Preparation &amp; Understanding</span></div><div class="desc"><span data-l="ar">مراجعة تفاصيل الحالة وسجلها قبل التواصل، والدخول بفهم واضح للمعلومات اللازمة.</span><span data-l="en">Reviewing case details and history before contact, entering with a clear understanding of the needed information.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">الإنصات الفعّال</span><span data-l="en">Active Listening</span></div><div class="desc"><span data-l="ar">الاستماع الكامل لشرح العميل للمشكلة دون مقاطعة.</span><span data-l="en">Listening fully to the customer's explanation of the problem without interrupting.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">التوجيه والإجراء — 45 نقطة</span><span data-l="en">Guidance &amp; Action — 45 pts</span></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">تشخيص المشكلة والسبب الجذري</span><span data-l="en">Problem Diagnosis / Root Cause</span></div><div class="desc"><span data-l="ar">ربط طلب العميل بمرحلة الحساب وسياق النظام، وتشخيص دقيق للمشكلة وسببها الجذري.</span><span data-l="en">Linking the customer's request to the account stage and system context, accurately diagnosing the problem and its root cause.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">الحل الصحيح والمناسب</span><span data-l="en">Correct &amp; Relevant Resolution</span></div><div class="desc"><span data-l="ar">تقديم حل صحيح يطابق طبيعة المشكلة بخطوات واضحة ودقيقة.</span><span data-l="en">Providing the correct solution matching the problem's nature with clear, accurate steps.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">تحمّل المسؤولية ومتابعة الحالة</span><span data-l="en">Ownership &amp; Case Management</span></div><div class="desc"><span data-l="ar">تحمّل مسؤولية الحالة حتى إغلاقها دون تحويلها بلا متابعة، والتنسيق الداخلي عند الحاجة.</span><span data-l="en">Owning the case until closure rather than transferring it without follow-up, coordinating internally when needed.</span></div></div></div>
+      <div class="iqs-sub"><span data-l="ar">الالتزام التشغيلي — 25 نقطة</span><span data-l="en">Operational Compliance — 25 pts</span></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">خطوات تالية وضبط التوقعات</span><span data-l="en">Clear Next Steps &amp; Expectation Setting</span></div><div class="desc"><span data-l="ar">توضيح الخطوات التالية والمدة المتوقعة للحل، والتأكد من فهم العميل قبل الإغلاق.</span><span data-l="en">Clarifying next steps and the expected resolution timeframe, confirming the customer's understanding before closing.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">5</span><div class="content"><div class="name"><span data-l="ar">جودة التوثيق في CRM</span><span data-l="en">CRM Documentation Quality</span></div><div class="desc"><span data-l="ar">تسجيل الـSentiment والملاحظات فوراً، تحديث حالة الكيس والـSubstage، إضافة التاجات، وتوثيق أي تصعيد.</span><span data-l="en">Recording sentiment and notes immediately, updating case status and substage, adding tags, and documenting any escalation.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">10</span><div class="content"><div class="name"><span data-l="ar">الالتزام بحالة الكيس/التصعيد</span><span data-l="en">Case Status / Escalation Compliance</span></div><div class="desc"><span data-l="ar">التعامل الفوري مع الكيسات الجديدة/المفتوحة دون تأخير، إغلاق الكيس بعد 3 محاولات تواصل غير مجدية مع توثيق السبب، والتصعيد للمدير عند الحاجة دون تأخير.</span><span data-l="en">Handling new/open cases immediately without delay, closing a case after 3 unanswered contact attempts with the reason documented, and escalating to the manager when needed without delay.</span></div></div></div>
+    </div>
+
+    <div class="iqs-cat">
+      <div class="iqs-cat-head"><h3><span data-l="ar">المحادثات | Chat &amp; Open CX</span><span data-l="en">Chat &amp; Open CX</span></h3><span class="wt">100 <span data-l="ar">نقطة</span><span data-l="en">pts</span></span></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">أول رد واضح ومرتبط</span><span data-l="en">Clear &amp; Relevant First Response</span></div><div class="desc"><span data-l="ar">الرد الأول على رسالة العميل برد مرتبط بطلبه أو استفساره مباشرة وبوضوح، وتجنّب الردود العامة غير المرتبطة.</span><span data-l="en">The first reply to the customer's message directly and clearly addresses their request, avoiding generic unrelated responses.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">الرد ضمن الوقت المحدد</span><span data-l="en">Response Within the Time Limit</span></div><div class="desc"><span data-l="ar">الرد الأول على رسالة العميل خلال ساعة ونصف كحد أقصى (90 دقيقة).</span><span data-l="en">Responding to the customer's first message within a maximum of 90 minutes.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">التوجيه الصحيح للمحادثة</span><span data-l="en">Correct Chat Routing</span></div><div class="desc"><span data-l="ar">تحويل المحادثة للفريق/القسم المتخصص المناسب، وتجنّب التحويلات غير الضرورية لقسم خاطئ.</span><span data-l="en">Transferring the conversation to the appropriate specialized team/department, avoiding unnecessary transfers to the wrong department.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">ملاحظة داخلية واضحة</span><span data-l="en">Clear Internal Note</span></div><div class="desc"><span data-l="ar">إضافة تعليق داخلي يلخّص المحادثة والإجراء المطلوب، بصياغة واضحة لأي موظف يستقبلها، دون ترك المحادثة بلا توثيق.</span><span data-l="en">Adding an internal comment summarizing the conversation and the required action, written clearly for any receiving employee, never leaving it undocumented.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">15</span><div class="content"><div class="name"><span data-l="ar">إغلاق صحيح للمحادثة</span><span data-l="en">Proper Conversation Closure</span></div><div class="desc"><span data-l="ar">إبقاء المحادثات الحية مفتوحة باسم الموظف خلال التفاعل الفعلي مع تحديث مستمر للملاحظات، وإغلاقها بملاحظات واضحة عند تأخر رد العميل، أو إغلاقها وتوجيهها للقسم المناسب عند الحاجة لمتابعة فنية لاحقاً، وتجنّب ترك محادثات مفتوحة بلا داعٍ.</span><span data-l="en">Keeping live conversations open under the employee's name during active engagement with continuous note updates, closing with clear notes when the customer's reply is delayed, or closing and routing to the right department when later technical follow-up is needed, and avoiding unnecessary open conversations.</span></div></div></div>
+      <div class="iqs-item"><span class="pts">20</span><div class="content"><div class="name"><span data-l="ar">حل المشكلة والمتابعة</span><span data-l="en">Problem Resolved &amp; Follow-up</span></div><div class="desc"><span data-l="ar">تم حل مشكلة العميل أو الوصول لإجابة واضحة بخصوص طلبه، والوفاء بأي التزام متابعة تم الاتفاق عليه.</span><span data-l="en">The customer's problem was resolved or a clear answer was reached regarding their request, fulfilling any agreed follow-up commitment.</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="sec-head"><span class="n">04</span><h2><span data-l="ar">الأخطاء الحرجة والبونص</span><span data-l="en">Critical Errors &amp; Bonus</span></h2></div>
+    <p class="lead"><span data-l="ar">مشتركة بين جميع أنواع التفاعل — أي خطأ حرج واحد يصفّر علامة التفاعل بالكامل، بينما تُضاف نقاط البونص عند تحقيقها فقط.</span><span data-l="en">Shared across all interaction types — any single critical error zeroes the interaction's score entirely, while bonus points are added only when achieved.</span></p>
+    <div class="grid2">
+      <div class="ce-box">
+        <div class="ce-item"><div><div class="name"><span data-l="ar">معلومة غير دقيقة</span><span data-l="en">Incorrect Information</span></div><div class="desc"><span data-l="ar">تزويد العميل بمعلومة غير دقيقة عن المنتج/السعر/السياسة دون التحقق منها.</span><span data-l="en">Providing the customer with unverified, inaccurate information about the product/price/policy.</span></div></div></div>
+        <div class="ce-item"><div><div class="name"><span data-l="ar">سلوك غير مهني</span><span data-l="en">Unprofessional Behavior</span></div><div class="desc"><span data-l="ar">استخدام نبرة أو ألفاظ غير لائقة أو عدم احترام العميل.</span><span data-l="en">Using an inappropriate tone or language, or disrespecting the customer.</span></div></div></div>
+        <div class="ce-item"><div><div class="name"><span data-l="ar">تأخر التعامل مع حالة عاجلة</span><span data-l="en">Delayed Response to Urgent Cases</span></div><div class="desc"><span data-l="ar">عدم التحرك الفوري مع كيس جديد/عاجل يتطلب تدخلاً سريعاً.</span><span data-l="en">Failing to act immediately on a new/urgent case requiring fast intervention.</span></div></div></div>
+        <div class="ce-item"><div><div class="name"><span data-l="ar">تأخر متابعة التفعيل/إعادة التفعيل</span><span data-l="en">Delayed Activation/Reactivation Follow-up</span></div><div class="desc"><span data-l="ar">عدم متابعة عميل تفعيل/إعادة تفعيل خلال الإطار الزمني المعتمد.</span><span data-l="en">Not following up with an activation/reactivation customer within the approved timeframe.</span></div></div></div>
+      </div>
+      <div class="bonus-box">
+        <div class="bonus-item"><span class="pts">+5</span><div><div class="name"><span data-l="ar">استباقية رصد حاجة/خطر العميل</span><span data-l="en">Proactive Risk/Need Identification</span></div><div class="desc"><span data-l="ar">رصد مؤشر خطر أو فرصة دون طلب العميل، ومعالجتها استباقياً.</span><span data-l="en">Identifying a risk indicator or opportunity without the customer asking, and addressing it proactively.</span></div></div></div>
+        <div class="bonus-item"><span class="pts">+5</span><div><div class="name"><span data-l="ar">أول عملية / نتيجة ملموسة</span><span data-l="en">First Win / Measurable Outcome</span></div><div class="desc"><span data-l="ar">تحقيق نتيجة قابلة للقياس خلال التفاعل (مثل إتمام أول عملية).</span><span data-l="en">Achieving a measurable, quantifiable result during the interaction (e.g. completing the first transaction).</span></div></div></div>
+        <div class="bonus-item"><span class="pts">+3</span><div><div class="name"><span data-l="ar">متابعة استباقية تتجاوز المطلوب</span><span data-l="en">Proactive Follow-up Beyond Requirement</span></div><div class="desc"><span data-l="ar">مبادرة تتجاوز الحد الأدنى المطلوب.</span><span data-l="en">An initiative going beyond the minimum requirement.</span></div></div></div>
+        <div class="bonus-item"><span class="pts">+2</span><div><div class="name"><span data-l="ar">فرصة تحسين استخدام العميل</span><span data-l="en">Usage Improvement Opportunity</span></div><div class="desc"><span data-l="ar">ملاحظة ميزة غير مستخدمة أو فرصة تحسين، ومشاركتها بشكل عملي مع العميل.</span><span data-l="en">Noticing an underused feature or improvement opportunity and sharing it practically with the customer.</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="sec-head"><span class="n">05</span><h2><span data-l="ar">التحديث — أغسطس 2026</span><span data-l="en">Update — August 2026</span></h2></div>
+    <div class="obs">
+      <div class="obs-item"><span class="ix">1</span><div><h3><span data-l="ar">إضافة قسم المحادثات الكامل</span><span data-l="en">Added the full Chat section</span></h3><p><span data-l="ar">إضافة ستة معايير جديدة مخصصة لقناة المحادثات (Chat/Open CX)، بأوزان نقطية تصل مجموعها إلى 100 نقطة.</span><span data-l="en">Added six new criteria dedicated to the Chat/Open CX channel, with point weights totalling 100.</span></p></div></div>
+      <div class="obs-item"><span class="ix">2</span><div><h3><span data-l="ar">وصف ومثال لكل معيار</span><span data-l="en">Description &amp; example for every criterion</span></h3><p><span data-l="ar">إضافة وصف تفصيلي ومثال عملي واضح لكل معيار في جميع الأقسام، بحيث يفهم أي موظف المقصود بالمعيار دون غموض.</span><span data-l="en">Added a detailed description and a clear practical example to every criterion across all sections, so any employee understands exactly what the criterion means with no ambiguity.</span></p></div></div>
+      <div class="obs-item"><span class="ix">3</span><div><h3><span data-l="ar">توضيح المعايير للقسم</span><span data-l="en">Clarified the criteria to the department</span></h3><p><span data-l="ar">شرح المعايير المحدَّثة لفريق نجاح العملاء بأمثلة عملية وواضحة، ونشرها على صفحة تفاعلية مرجعية.</span><span data-l="en">Explained the updated criteria to the CSM team with clear, practical examples, and published them on a reference interactive page.</span></p></div></div>
+    </div>
+    <div class="res-grid" style="margin-top:14px">
+      <a class="res" href="https://fyousef-2023.github.io/CSM_Quality_Criteria_Interactive/" target="_blank" rel="noopener"><b><span data-l="ar">صفحة معايير الجودة التفاعلية</span><span data-l="en">Interactive Quality Criteria Page</span></b><span class="slug">CSM_Quality_Criteria_Interactive</span></a>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <div class="sec-head"><span class="n">06</span><h2><span data-l="ar">الفورم الثاني والسكربت — سبتمبر 2026</span><span data-l="en">The Second Form &amp; Script — September 2026</span></h2></div>
+    <p class="lead"><span data-l="ar">بناء فورم ثانٍ مستقل لمراجعة المكالمات، والعمل الكامل على سكربت Google Apps Script الذي يعالج استجاباته.</span><span data-l="en">Building a second, standalone form for call reviews, and full work on the Google Apps Script that processes its responses.</span></p>
+
+    <div class="card" style="margin-bottom:14px">
+      <h3 style="font-size:15px;margin-bottom:8px;color:var(--purple)"><span data-l="ar">بناء الفورم</span><span data-l="en">Building the form</span></h3>
+      <p style="margin:0;font-size:13.5px;color:var(--dim)"><span data-l="ar">إطلاق "CSM Call QA Review Form" في 7 سبتمبر 2026 — نموذج جوجل مباشر لمراجعة المكالمات، مرتبط بسكريبت Google Apps Script Container-bound لمعالجة الاستجابات.</span><span data-l="en">Launched the "CSM Call QA Review Form" on 7 September 2026 — a live Google Form for call reviews, linked to a container-bound Google Apps Script that processes the responses.</span></p>
+    </div>
+
+    <div class="tbl-wrap" style="margin-bottom:14px">
+      <table>
+        <thead><tr>
+          <th><span data-l="ar">المجموعة في الفورم</span><span data-l="en">Form Group</span></th>
+          <th><span data-l="ar">عدد المعايير</span><span data-l="en">Criteria Count</span></th>
+          <th><span data-l="ar">الحد الأقصى</span><span data-l="en">Max</span></th>
+          <th><span data-l="ar">ملاحظات</span><span data-l="en">Notes</span></th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="name">Activation</td><td class="mono">10</td><td class="mono">100</td><td>—</td></tr>
+          <tr><td class="name">Reactivation</td><td class="mono">7</td><td class="mono">100</td><td>—</td></tr>
+          <tr><td class="name">Case Handling</td><td class="mono">9</td><td class="mono">100</td><td>—</td></tr>
+          <tr><td class="name">Chat</td><td class="mono">6</td><td class="mono">100</td><td>—</td></tr>
+          <tr><td class="name">Critical Errors</td><td class="mono">4</td><td class="mono"><span data-l="ar">وزن 0</span><span data-l="en">0 weight</span></td><td><span data-l="ar">أي "Yes" يصفّر القسم والبونص بالكامل</span><span data-l="en">Any "Yes" zeroes the section and the bonus entirely</span></td></tr>
+          <tr><td class="name">Bonus</td><td class="mono">4</td><td class="mono"><span data-l="ar">حتى 15</span><span data-l="en">Up to 15</span></td><td>5 + 5 + 3 + 2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="obs">
+      <div class="obs-item"><span class="ix">1</span><div><h3><span data-l="ar">قائمة مخصصة وإعداد أول</span><span data-l="en">Custom menu &amp; one-time setup</span></h3><p><span data-l="ar">قائمة "أدوات الجودة" في الشيت بأمرين: "الإعداد الأول (مرة وحدة)" يضيف أعمدة العلامة والبونص، ينسّق صف العناوين، يجمّد الصف الأول و4 أعمدة، ويخفي عمود الدرجة الخام؛ و"تحديث كل البيانات الآن" لإعادة البناء يدوياً عند الحاجة.</span><span data-l="en">A "QA Tools" menu in the sheet with two commands: "One-time setup" adds the score and bonus columns, formats the header row, freezes the first row and 4 columns, and hides the raw score column; "Refresh all data now" rebuilds everything manually on demand.</span></p></div></div>
+      <div class="obs-item"><span class="ix">2</span><div><h3><span data-l="ar">تحديث تلقائي عند كل استجابة</span><span data-l="en">Automatic refresh on every response</span></h3><p><span data-l="ar">تريغر <span class="mono">onFormSubmit</span> يستدعي <span class="mono">refreshAll</span> فوراً عند كل استجابة جديدة، فتُحسب علامة القسم ونقاط البونص ويُعاد بناء كل الأوراق المعتمدة عليها دون أي خطوة يدوية.</span><span data-l="en">An <span class="mono">onFormSubmit</span> trigger calls <span class="mono">refreshAll</span> instantly on every new response, computing the section score and bonus points and rebuilding every dependent sheet with no manual step.</span></p></div></div>
+      <div class="obs-item"><span class="ix">3</span><div><h3><span data-l="ar">حساب العلامة ومنطق التصفير</span><span data-l="en">Score calculation &amp; zero-out logic</span></h3><p><span data-l="ar">علامة القسم % = مجموع أوزان الإجابات "Yes" ÷ مجموع أوزان المعايير المُجابة بـ Yes أو No فقط؛ وأي خطأ حرج واحد يصفّر العلامة والبونص تلقائياً وفوراً.</span><span data-l="en">Section score % = sum of weights for "Yes" answers ÷ sum of weights for criteria answered Yes or No only; any single critical error zeroes the score and bonus automatically and instantly.</span></p></div></div>
+      <div class="obs-item"><span class="ix">4</span><div><h3><span data-l="ar">أوراق مستقلة لكل نوع تفاعل</span><span data-l="en">Standalone sheets per interaction type</span></h3><p><span data-l="ar">تُبنى عبر صيغة <span class="mono">QUERY</span> تسحب تلقائياً استجابات ذلك النوع فقط من الورقة الرئيسية، برأس أعمدة مُلوَّن بأربع مجموعات: بيانات عامة (تيل)، معايير النوع (بنفسجي)، الأخطاء الحرجة (أحمر غامق)، البونص (أخضر غامق).</span><span data-l="en">Built via a <span class="mono">QUERY</span> formula that automatically pulls only that type's responses from the main sheet, with a column header colored in four groups: general data (teal), that type's criteria (purple), critical errors (dark red), and bonus (dark green).</span></p></div></div>
+      <div class="obs-item"><span class="ix">5</span><div><h3><span data-l="ar">لوحة أداء عامة وورقة لكل موظف</span><span data-l="en">Overall dashboard &amp; a per-agent sheet</span></h3><p><span data-l="ar">لوحة أداء بطاقات KPI وجدول ترتيب ومخططات لكل نوع تفاعل وللأداء العام، وورقة مستقلة لكل موظف تضم KPI، أضعف وأقوى 5 معايير، مخطط خطي لمسار الأداء، وسجل تواريخ الأخطاء الحرجة.</span><span data-l="en">A dashboard with KPI cards, a leaderboard, and charts per interaction type and overall, plus a standalone sheet per agent with KPIs, the weakest and strongest 5 criteria, a performance-over-time line chart, and a log of critical-error dates.</span></p></div></div>
+    </div>
+
+    <h3 style="font-size:15px;margin:20px 0 10px;color:var(--purple)"><span data-l="ar">الإصلاحات بعد الإطلاق — 12 سبتمبر 2026</span><span data-l="en">Post-launch fixes — 12 September 2026</span></h3>
+    <div class="obs">
+      <div class="obs-item fix"><span class="ix">1</span><div><h3><span data-l="ar">تغطية ناقصة لقناة المحادثات</span><span data-l="en">Incomplete Chat channel coverage</span></h3><p><span data-l="ar">"Chat | المحادثات" لم تكن مدرجة في خريطة الأقسام (SECTION_RANGES) — فلم تُبنَ ورقتها أو تُلوَّن أعمدتها من الأساس. تم إدراجها رسمياً في الخريطة.</span><span data-l="en">"Chat" wasn't listed in the section map (SECTION_RANGES) — so its sheet was never built and its columns were never colored. It's now formally registered in the map.</span></p></div></div>
+      <div class="obs-item fix"><span class="ix">2</span><div><h3><span data-l="ar">تلوين ناقص للأخطاء الحرجة</span><span data-l="en">Incomplete critical-error coloring</span></h3><p><span data-l="ar">كان التلوين يغطي فقط "Yes" (أحمر)، وتُترك "No" — النتيجة الجيدة — بلا تلوين. أصبح الآن "No" = أخضر صريح و"Yes" = أحمر صريح، في كل الأوراق.</span><span data-l="en">Coloring only covered "Yes" (red), leaving "No" — the good outcome — uncolored. Now "No" = explicit green and "Yes" = explicit red, across every sheet.</span></p></div></div>
+      <div class="obs-item fix"><span class="ix">3</span><div><h3><span data-l="ar">رؤوس أعمدة غير موحّدة</span><span data-l="en">Inconsistent column headers</span></h3><p><span data-l="ar">أوراق الأنواع والموظفين كانت بلون رأس واحد مسطّح، بخلاف الورقة الرئيسية. تم توحيد نظام الأربع ألوان على جميع الأوراق.</span><span data-l="en">Type and agent sheets had one flat header color, unlike the main sheet. The four-color grouping was standardized across every sheet.</span></p></div></div>
+    </div>
+  </section>
+
+  <footer><span data-l="ar">إعداد: قسم الجودة — فريق نجاح العملاء | رِواء</span><span data-l="en">Prepared by: Quality Department — Customer Success Team | Rewaa</span></footer>
+</div>
+
+<script>
+const root=document.documentElement;
+function setLang(l){
+  root.lang=l; root.dir=l==='ar'?'rtl':'ltr';
+  document.title=l==='ar'?'تأسيس الجودة — المعايير والفورم والسكربت':'Quality Establishment — Criteria, Form & Script';
+  try{localStorage.setItem('qaEstablishmentReportLang',l);}catch(e){}
+}
+let saved='ar';
+try{saved=localStorage.getItem('qaEstablishmentReportLang')||'ar';}catch(e){}
+setLang(saved);
+document.getElementById('langBtn').addEventListener('click',()=>setLang(root.lang==='ar'?'en':'ar'));
+</script>
+</body></html>
