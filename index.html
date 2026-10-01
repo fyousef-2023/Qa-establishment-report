@@ -163,7 +163,7 @@ footer{text-align:center;font-size:12px;color:var(--faint);padding-top:20px;bord
     <span class="eyebrow">CSM · Rewaa · Quality Establishment</span>
     <h1><span data-l="ar">تأسيس الجودة — المعايير والفورم والسكربت</span><span data-l="en">Quality Establishment — Criteria, Form &amp; Script</span></h1>
     <p>
-      <span data-l="ar">تقرير يوثّق تأسيس الجودة داخل فريق نجاح العملاء: كتابة المعايير ووصفها، بناء الفورم الأول ولوحة Power BI، تحديث المعايير بإضافة قسم المحادثات وأمثلة عملية، وبناء الفورم الثاني مع العمل على سكربت معالجته.</span>
+      <span data-l="ar">تقرير مستقل يوثّق تأسيس الجودة داخل فريق نجاح العملاء: كتابة المعايير ووصفها، بناء الفورم الأول ولوحة Power BI، تحديث المعايير بإضافة قسم المحادثات وأمثلة عملية، وبناء الفورم الثاني مع العمل على سكربت معالجته.</span>
       <span data-l="en">A standalone report documenting the establishment of Quality within the CSM team: writing the criteria and their descriptions, building the first form and the Power BI dashboard, updating the criteria with a new Chat section and practical examples, and building the second form along with the script that processes it.</span>
     </p>
     <div class="meta">
@@ -188,8 +188,8 @@ footer{text-align:center;font-size:12px;color:var(--faint);padding-top:20px;bord
         <li data-l="en"><b>Establishment (April 2026):</b> writing the quality criteria and their descriptions for the main interaction types, building the first form to record evaluations, and creating the linked Power BI dashboard.</li>
         <li data-l="ar"><b>التحديث (أغسطس 2026):</b> إضافة قسم معايير كامل للمحادثات (Chat/Open CX)، وإضافة وصف ومثال عملي لكل معيار في جميع الأقسام، وتوضيحها للقسم بأمثلة واضحة.</li>
         <li data-l="en"><b>Update (August 2026):</b> adding a full Chat/Open CX criteria section, adding a description and practical example to every criterion across all sections, and clarifying them to the department with clear examples.</li>
-        <li data-l="ar"><b>الفورم الثاني والسكربت (سبتمبر 2026):</b> بناء "Form" بالكامل، والعمل على سكربت Google Apps Script الذي يعالج استجاباته ويولّد العلامات واللوحات تلقائياً.</li>
-        <li data-l="en"><b>The second form &amp; script (September 2026):</b> building the "CSM Call QA Review Form" in full, and working on the Google Apps Script that processes its responses and generates scores and dashboards automatically.</li>
+        <li data-l="ar"><b>الفورم الثاني والسكربت (سبتمبر 2026):</b> بناء "نموذج تقييم جودة تواصل نجاح العملاء | CSM Call QA Review Form (Responses)" بالكامل، والعمل على سكربت Google Apps Script الذي يعالج استجاباته ويولّد العلامات واللوحات تلقائياً — كمعادل داخل Google Sheets للوحة Power BI المبنية في مرحلة التأسيس.</li>
+        <li data-l="en"><b>The second form &amp; script (September 2026):</b> building "نموذج تقييم جودة تواصل نجاح العملاء | CSM Call QA Review Form (Responses)" in full, and working on the Google Apps Script that processes its responses and generates scores and dashboards automatically — a Google Sheets equivalent of the Power BI dashboard built during establishment.</li>
       </ul>
     </div>
   </section>
@@ -330,7 +330,20 @@ footer{text-align:center;font-size:12px;color:var(--faint);padding-top:20px;bord
 
     <div class="card" style="margin-bottom:14px">
       <h3 style="font-size:15px;margin-bottom:8px;color:var(--purple)"><span data-l="ar">بناء الفورم</span><span data-l="en">Building the form</span></h3>
-      <p style="margin:0;font-size:13.5px;color:var(--dim)"><span data-l="ar">إطلاق "CSM Call QA Review Form" في 7 سبتمبر 2026 — نموذج جوجل مباشر لمراجعة المكالمات، مرتبط بسكريبت Google Apps Script Container-bound لمعالجة الاستجابات.</span><span data-l="en">Launched the "CSM Call QA Review Form" on 7 September 2026 — a live Google Form for call reviews, linked to a container-bound Google Apps Script that processes the responses.</span></p>
+      <p style="margin:0 0 10px;font-size:13.5px;color:var(--dim)"><span data-l="ar">إطلاق "نموذج تقييم جودة تواصل نجاح العملاء | CSM Call QA Review Form (Responses)" في 7 سبتمبر 2026 — نموذج جوجل مباشر لمراجعة المكالمات، مرتبط بسكريبت Google Apps Script Container-bound لمعالجة الاستجابات.</span><span data-l="en">Launched "نموذج تقييم جودة تواصل نجاح العملاء | CSM Call QA Review Form (Responses)" on 7 September 2026 — a live Google Form for call reviews, linked to a container-bound Google Apps Script that processes the responses.</span></p>
+      <p style="margin:0;font-size:13.5px;color:var(--dim)"><span data-l="ar">كل البيانات والمؤشرات التي يبنيها السكربت كانت أصلاً متاحة في لوحة Power BI المبنية في مرحلة التأسيس (أبريل) — وهي الخيار الأفضل عملياً مقارنة بسكريبت طويل يسبب بطئاً في التحميل (Loading). رغم ذلك، تم تحويل منطق تلك اللوحة إلى سكربت Google Apps Script ليبني لوحة أداء مكافئة داخل الشيت نفسه.</span><span data-l="en">All the data and metrics the script builds were already available in the Power BI dashboard built during establishment (April) — which is practically the better choice compared to a long script that causes loading delays. Even so, that dashboard's logic was converted into a Google Apps Script to build an equivalent performance dashboard inside the sheet itself.</span></p>
+    </div>
+
+    <div class="res-group" style="margin-bottom:14px">
+      <h3><span data-l="ar">الفورمات ذات الصلة</span><span data-l="en">Related Forms</span></h3>
+      <div class="res-grid">
+        <a class="res" href="https://docs.google.com/forms/d/e/1FAIpQLSfT2ot6jQ29lsbEc6IIe4C8Nu6P-jqyEZrYFBtOIEChvyuYoQ/viewform" target="_blank" rel="noopener"><b><span data-l="ar">نموذج المراجعة الأساسي</span><span data-l="en">Main Review Form</span></b><span class="slug">Google Form</span></a>
+        <a class="res" href="https://docs.google.com/forms/d/e/1FAIpQLSeyO9YCDmm0134PnBPqgG8QhxQkv0ntMK1YJnLb8qt0RgcDbQ/viewform" target="_blank" rel="noopener"><b><span data-l="ar">فورم الحالات</span><span data-l="en">Cases Form</span></b><span class="slug">Google Form</span></a>
+        <a class="res" href="https://docs.google.com/forms/d/e/1FAIpQLSf6kx5bRrPhcNB_4l0bq3jlM-pSzbpftyt3sZ1WKmuELkC4Zg/viewform" target="_blank" rel="noopener"><b><span data-l="ar">فورم التفعيل</span><span data-l="en">Activation Form</span></b><span class="slug">Google Form</span></a>
+        <a class="res" href="https://forms.gle/4j3mhqHPcjXoZy3S7" target="_blank" rel="noopener"><b><span data-l="ar">فورم الاستبقاء</span><span data-l="en">Retention Form</span></b><span class="slug">Google Form</span></a>
+        <a class="res" href="https://forms.gle/ZEGxCZtunWRPnCei9" target="_blank" rel="noopener"><b>QBR</b><span class="slug">Google Form</span></a>
+        <a class="res" href="https://forms.gle/LxKKhdkccEeFWqzu9" target="_blank" rel="noopener"><b><span data-l="ar">مراجعة CSM العامة</span><span data-l="en">General CSM Review</span></b><span class="slug">Google Form</span></a>
+      </div>
     </div>
 
     <div class="tbl-wrap" style="margin-bottom:14px">
